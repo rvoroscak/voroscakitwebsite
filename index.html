@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoroscakIT — IT gets you there</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Instrument Serif, Plus Jakarta Sans, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        midnight: '#060913',
+                        slateCard: '#0F1629',
+                        slateBorder: 'rgba(255, 255, 255, 0.08)',
+                        iceBlue: '#38BDF8',
+                        warmAmber: '#F59E0B',
+                        offWhite: '#F1F5F9'
+                    },
+                    fontFamily: {
+                        editorial: ['Instrument Serif', 'serif'],
+                        sans: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    transitionTimingFunction: {
+                        custom: 'cubic-bezier(0.25, 1, 0.5, 1)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #060913;
+            color: #F1F5F9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-editorial {
+            font-family: 'Instrument Serif', serif;
+        }
+
+        /* Ambient occlusion multi-layer shadow */
+        .shadow-ambient {
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.07);
+        }
+
+        .shadow-ambient-hover:hover {
+            box-shadow: 0 32px 64px -16px rgba(56, 189, 248, 0.15), 0 0 1px 1px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Subtle grid background pattern */
+        .editorial-grid {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060913;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-midnight text-offWhite min-h-screen flex flex-col selection:bg-iceBlue selection:text-midnight">
+
+    <div id="toast-container" class="fixed bottom-8 right-8 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <header class="sticky top-0 z-40 bg-midnight/80 backdrop-blur-xl border-b border-slateBorder transition-all duration-400">
+        <div class="max-w-7xl mx-auto px-6 lg:px-16">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Brand Title and Slogan (Logo graphic removed) -->
+                <a href="#hero" class="flex flex-col group">
+                    <span class="text-lg font-bold tracking-tight text-offWhite group-hover:text-iceBlue transition-colors duration-300 font-sans">
+                        Voroscak<span class="text-iceBlue">IT</span>
+                    </span>
+                    <span class="font-mono text-[10px] text-gray-400 tracking-widest uppercase">IT GETS YOU THERE</span>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                    <a href="#capabilities" class="hover:text-iceBlue transition-colors duration-300">Skills & Services</a>
+                    <a href="#manifesto" class="hover:text-iceBlue transition-colors duration-300">Philosophy</a>
+                    <a href="#about" class="hover:text-iceBlue transition-colors duration-300">About</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <a href="#help" class="bg-warmAmber hover:bg-amber-400 text-midnight font-bold px-5 py-2.5 rounded-[12px] text-xs font-mono uppercase tracking-wider transition-all duration-400 ease-custom hover:shadow-lg hover:shadow-warmAmber/20 active:scale-95">
+                        Get Help
+                    </a>
+                    <a href="#contact" class="bg-offWhite hover:bg-iceBlue text-midnight font-semibold px-6 py-2.5 rounded-[12px] text-xs font-mono uppercase tracking-wider transition-all duration-400 ease-custom hover:shadow-lg hover:shadow-iceBlue/20 active:scale-95">
+                        Get in Touch
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" type="button" class="md:hidden text-gray-300 hover:text-white p-2 focus:outline-none" aria-label="Toggle Navigation">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16"></path></svg>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-slateBorder bg-midnight/95 backdrop-blur-2xl px-8 py-6 space-y-4">
+            <a href="#capabilities" class="mobile-link block text-base font-medium text-gray-200 hover:text-iceBlue">Skills & Services</a>
+            <a href="#manifesto" class="mobile-link block text-base font-medium text-gray-200 hover:text-iceBlue">Philosophy</a>
+            <a href="#about" class="mobile-link block text-base font-medium text-gray-200 hover:text-iceBlue">About</a>
+            <div class="pt-3 border-t border-slateBorder flex flex-col space-y-2.5">
+                <a href="#help" class="mobile-link block w-full text-center bg-warmAmber text-midnight font-bold py-3 rounded-[12px] text-xs font-mono uppercase">
+                    Get Help
+                </a>
+                <a href="#contact" class="mobile-link block w-full text-center bg-offWhite text-midnight font-bold py-3 rounded-[12px] text-xs font-mono uppercase">
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow editorial-grid">
+
+        <!-- Hero Section -->
+        <section id="hero" class="relative pt-12 pb-16 lg:pt-20 lg:pb-20 border-b border-slateBorder overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 lg:px-16">
+                <div class="max-w-3xl space-y-6 z-10">
+                    
+                    <div class="inline-flex items-center space-x-3 px-3.5 py-2 rounded-[10px] bg-slateCard border border-slateBorder text-xs font-mono text-iceBlue shadow-ambient">
+                        <span class="w-2 h-2 rounded-full bg-iceBlue animate-pulse"></span>
+                        <span>// INDEPENDENT IT & SYSTEMS ADMINISTRATION</span>
+                    </div>
+
+                    <h1 class="text-6xl sm:text-7xl lg:text-8xl font-editorial font-normal tracking-tight text-offWhite leading-[0.92]">
+                        IT gets <br>
+                        <span class="italic text-iceBlue">you there.</span>
+                    </h1>
+
+                    <p class="text-lg lg:text-xl text-gray-300 max-w-2xl font-normal leading-relaxed">
+                        Practical, dependable IT engineering without the runaround. From network administration and multi-vendor firewall configuration to M365/Google Workspace management, VoIP, printer deployments, and macOS/Windows troubleshooting.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                        <a href="#contact" class="bg-iceBlue hover:bg-sky-400 text-midnight font-bold px-8 py-3.5 rounded-[14px] text-sm font-mono tracking-wide transition-all duration-400 ease-custom text-center shadow-ambient hover:scale-[1.02] active:scale-98">
+                            START A PROJECT
+                        </a>
+                        <a href="#help" class="bg-slateCard hover:bg-slate-800 text-offWhite border border-slateBorder font-medium px-8 py-3.5 rounded-[14px] text-sm font-mono tracking-wide transition-all duration-400 ease-custom text-center shadow-ambient hover:scale-[1.02] active:scale-98">
+                            DOWNLOAD SUPPORT TOOL
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="capabilities" class="py-16 lg:py-20 border-b border-slateBorder">
+            <div class="max-w-7xl mx-auto px-6 lg:px-16 space-y-12">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div class="space-y-3 max-w-xl">
+                        <span class="font-mono text-xs text-iceBlue tracking-widest uppercase">// 01. SKILLS & EXPERTISE</span>
+                        <h2 class="text-4xl lg:text-5xl font-editorial font-normal tracking-tight text-offWhite">
+                            Broad technical capabilities for growing businesses.
+                        </h2>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-sm font-sans">
+                        Comprehensive IT support, enterprise networking, cloud administration, and infrastructure build-outs.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    
+                    <!-- Card 1 -->
+                    <div class="lg:col-span-7 bg-slateCard border border-slateBorder rounded-[28px] p-8 lg:p-10 flex flex-col justify-between shadow-ambient shadow-ambient-hover transition-all duration-500 ease-custom group">
+                        <div class="space-y-5">
+                            <div class="w-12 h-12 rounded-[16px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue shadow-ambient group-hover:scale-105 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <span class="font-mono text-xs text-iceBlue block">01 / NETWORK ADMINISTRATION & FIREWALLS</span>
+                            <h3 class="text-2xl lg:text-3xl font-editorial font-normal text-offWhite">Multi-Vendor Routing & Security</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed max-w-lg font-sans">
+                                Hands-on experience designing, configuring, and maintaining network architectures across Cisco, SonicWall, WatchGuard, and UniFi. VLAN segmentation, secure site-to-site VPNs, and robust firewall rules.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-slateBorder flex flex-wrap gap-2 font-mono text-xs text-gray-300">
+                            <span class="px-3 py-1.5 rounded-[10px] bg-midnight border border-slateBorder">Cisco & SonicWall</span>
+                            <span class="px-3 py-1.5 rounded-[10px] bg-midnight border border-slateBorder">WatchGuard & UniFi</span>
+                            <span class="px-3 py-1.5 rounded-[10px] bg-midnight border border-slateBorder">VLAN & VPN Setup</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="lg:col-span-5 bg-slateCard border border-slateBorder rounded-[28px] p-8 lg:p-10 flex flex-col justify-between shadow-ambient shadow-ambient-hover transition-all duration-500 ease-custom group">
+                        <div class="space-y-5">
+                            <div class="w-12 h-12 rounded-[16px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue shadow-ambient group-hover:scale-105 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <span class="font-mono text-xs text-iceBlue block">02 / ENDPOINTS & CLOUD ADMIN</span>
+                            <h3 class="text-2xl lg:text-3xl font-editorial font-normal text-offWhite">macOS/Windows, M365 & Workspace</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed font-sans">
+                                Expert troubleshooting across macOS and Windows. Full administration of Microsoft 365 and Google Workspace environments, user provisioning, domain registrar management, and ConnectWise RMM/PSA setup.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-slateBorder font-mono text-xs text-gray-300">
+                            <span class="font-sans text-xs text-gray-300">M365 & Google Workspace &bull; ConnectWise &bull; Mac/Win</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="lg:col-span-5 bg-slateCard border border-slateBorder rounded-[28px] p-8 lg:p-10 flex flex-col justify-between shadow-ambient shadow-ambient-hover transition-all duration-500 ease-custom group">
+                        <div class="space-y-5">
+                            <div class="w-12 h-12 rounded-[16px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue shadow-ambient group-hover:scale-105 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                            </div>
+                            <span class="font-mono text-xs text-iceBlue block">03 / INFRASTRUCTURE & HARDWARE</span>
+                            <h3 class="text-2xl lg:text-3xl font-editorial font-normal text-offWhite">Cabling, VoIP & Printers</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed font-sans">
+                                Professional running and termination of Ethernet (Cat5e/Cat6) and coax cables. VoIP phone system deployment and management, printer maintenance/deployment, and UniFi Access planning.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-slateBorder font-mono text-xs text-gray-300">
+                            <span class="font-sans text-xs text-gray-300">Ethernet & Coax &bull; VoIP &bull; Printer Fleets</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="lg:col-span-7 bg-slateCard border border-slateBorder rounded-[28px] p-8 lg:p-10 flex flex-col justify-between shadow-ambient shadow-ambient-hover transition-all duration-500 ease-custom group">
+                        <div class="space-y-5">
+                            <div class="w-12 h-12 rounded-[16px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue shadow-ambient group-hover:scale-105 transition-transform duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <span class="font-mono text-xs text-iceBlue block">04 / CONSULTATION & SUPPORT</span>
+                            <h3 class="text-2xl lg:text-3xl font-editorial font-normal text-offWhite">Professional IT Consulting & Administration</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed max-w-lg font-sans">
+                                Strategic IT project consulting to help you evaluate hardware, manage domain registrars, plan office relocations, scale your infrastructure, or augment internal capabilities with experienced systems administration.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-slateBorder flex flex-wrap gap-2 font-mono text-xs text-gray-300">
+                            <span class="px-3 py-1.5 rounded-[10px] bg-midnight border border-slateBorder">Infrastructure Planning</span>
+                            <span class="px-3 py-1.5 rounded-[10px] bg-midnight border border-slateBorder">Domain Management</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section id="manifesto" class="py-16 lg:py-20 border-b border-slateBorder bg-slateCard/30">
+            <div class="max-w-5xl mx-auto px-6 lg:px-16 space-y-10 text-center">
+                
+                <span class="font-mono text-xs text-iceBlue tracking-widest uppercase">// 02. PHILOSOPHY</span>
+                
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-editorial font-normal text-offWhite leading-[1.08]">
+                    "No call centers or scripted ticket queues. Just direct engineer accountability."
+                </h2>
+
+                <p class="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-sans">
+                    When you work with VoroscakIT, you get straightforward answers and hands-on execution from someone who understands the full scope of your network, cloud tenants, and endpoints.
+                </p>
+
+                <div class="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+                    <div class="bg-slateCard border border-slateBorder rounded-[22px] p-6 shadow-ambient">
+                        <div class="font-mono text-xs text-iceBlue mb-2">01 / DIRECT COMMUNICATION</div>
+                        <p class="text-sm text-gray-300 font-sans">Talk directly with the engineer managing your systems.</p>
+                    </div>
+                    <div class="bg-slateCard border border-slateBorder rounded-[22px] p-6 shadow-ambient">
+                        <div class="font-mono text-xs text-iceBlue mb-2">02 / VERSATILE SKILLSET</div>
+                        <p class="text-sm text-gray-300 font-sans">Fluent across firewalls, M365/Workspace, VoIP, and physical cabling.</p>
+                    </div>
+                    <div class="bg-slateCard border border-slateBorder rounded-[22px] p-6 shadow-ambient">
+                        <div class="font-mono text-xs text-iceBlue mb-2">03 / PRAGMATIC APPROACH</div>
+                        <p class="text-sm text-gray-300 font-sans">Solutions tailored to your exact business needs and workflow.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="about" class="py-16 lg:py-20 border-b border-slateBorder">
+            <div class="max-w-7xl mx-auto px-6 lg:px-16">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    
+                    <div class="lg:col-span-6 space-y-5">
+                        <span class="font-mono text-xs text-iceBlue tracking-widest uppercase">// 03. ABOUT VOROSCAKIT</span>
+                        <h2 class="text-4xl lg:text-5xl font-editorial font-normal text-offWhite">
+                            Independent IT expertise built on real-world experience.
+                        </h2>
+                        <p class="text-gray-300 text-sm leading-relaxed font-sans">
+                            VoroscakIT provides reliable IT consulting, network administration, cloud management, and hands-on technical support for businesses that need things done right the first time.
+                        </p>
+                        <p class="text-gray-300 text-sm leading-relaxed font-sans">
+                            With extensive background in M365 and Google Workspace administration, multi-vendor firewalls, VoIP deployment, printer fleets, and structured cabling, every project is handled with precision.
+                        </p>
+                        <div class="pt-2">
+                            <span class="font-mono text-xs text-offWhite bg-slateCard border border-slateBorder px-5 py-3 rounded-[12px] inline-block shadow-ambient">
+                                Slogan: "IT gets you there"
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 bg-slateCard border border-slateBorder rounded-[28px] p-8 shadow-ambient font-mono text-xs text-gray-300 space-y-5">
+                        <div class="flex items-center justify-between border-b border-slateBorder pb-4">
+                            <span class="text-offWhite font-bold tracking-wider">CORE CAPABILITIES</span>
+                            <span class="text-iceBlue">ACTIVE</span>
+                        </div>
+                        <div class="space-y-3.5">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Networking Brands:</span>
+                                <span class="text-offWhite">Cisco, SonicWall, WatchGuard, UniFi</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Cloud & Productivity:</span>
+                                <span class="text-offWhite">M365 & Google Workspace Admin</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Systems & RMM:</span>
+                                <span class="text-offWhite">ConnectWise Setup & macOS/Win</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Communications:</span>
+                                <span class="text-offWhite">VoIP Deployment & Domain Mgmt</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Hardware & Cabling:</span>
+                                <span class="text-offWhite">Ethernet, Coax & Printers</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="help" class="py-16 lg:py-20 border-b border-slateBorder bg-slateCard/30">
+            <div class="max-w-4xl mx-auto px-6 lg:px-16 space-y-10 text-center">
+                
+                <span class="font-mono text-xs text-iceBlue tracking-widest uppercase">// 04. REMOTE SUPPORT & DOWNLOADS</span>
+                
+                <div class="space-y-3 max-w-xl mx-auto">
+                    <h2 class="text-4xl lg:text-5xl font-editorial font-normal text-offWhite">
+                        Get Instant Remote Support
+                    </h2>
+                    <p class="text-gray-400 text-sm leading-relaxed font-sans">
+                        Select your operating system below to download the secure VoroscakIT remote support executable for your system.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+                    <!-- Mac Client Card -->
+                    <button onclick="downloadClient('mac')" class="bg-slateCard hover:bg-slate-800 border border-slateBorder hover:border-iceBlue rounded-[28px] p-8 flex flex-col items-center justify-center space-y-4 shadow-ambient transition-all duration-300 group cursor-pointer text-left w-full">
+                        <div class="w-16 h-16 rounded-[20px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.95 6.05c.57-.7 0.96-1.67.85-2.64-.83.03-1.84.55-2.43 1.24-.53.6-1 1.58-.87 2.55.93.07 1.88-.47 2.45-1.15z"/></svg>
+                        </div>
+                        <div class="text-center space-y-1">
+                            <h3 class="text-xl font-bold text-offWhite font-sans">macOS Client</h3>
+                            <p class="text-xs font-mono text-gray-400">macOS 11.0 or newer</p>
+                        </div>
+                        <span class="inline-flex items-center space-x-2 text-xs font-mono text-iceBlue pt-2 group-hover:translate-x-1 transition-transform">
+                            <span>DOWNLOAD EXECUTABLE</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        </span>
+                    </button>
+
+                    <!-- Windows Client Card -->
+                    <button onclick="downloadClient('windows')" class="bg-slateCard hover:bg-slate-800 border border-slateBorder hover:border-iceBlue rounded-[28px] p-8 flex flex-col items-center justify-center space-y-4 shadow-ambient transition-all duration-300 group cursor-pointer text-left w-full">
+                        <div class="w-16 h-16 rounded-[20px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3.449L10.02 2v9.33H0V3.449zm11.838-.28L24 1.3v9.85H11.838V3.169zM0 13.67h10.02V23L0 21.551v-7.88zm11.838.161H24V22.7l-12.162 1.81V13.831z"/></svg>
+                        </div>
+                        <div class="text-center space-y-1">
+                            <h3 class="text-xl font-bold text-offWhite font-sans">Windows Client</h3>
+                            <p class="text-xs font-mono text-gray-400">Windows 10 / 11 (64-bit)</p>
+                        </div>
+                        <span class="inline-flex items-center space-x-2 text-xs font-mono text-iceBlue pt-2 group-hover:translate-x-1 transition-transform">
+                            <span>DOWNLOAD EXECUTABLE</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        </span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 lg:py-20">
+            <div class="max-w-4xl mx-auto px-6 lg:px-16 space-y-10">
+                
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <span class="font-mono text-xs text-iceBlue tracking-widest uppercase">// 05. START A CONVERSATION</span>
+                    <h2 class="text-4xl lg:text-5xl font-editorial font-normal text-offWhite">Get in Touch</h2>
+                    <p class="text-gray-400 text-sm font-sans">Tell us about your IT project, infrastructure needs, or technical support requirements.</p>
+                </div>
+
+                <div class="bg-slateCard border border-slateBorder rounded-[28px] p-8 lg:p-12 shadow-ambient">
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-5">
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label for="name" class="block text-xs font-mono text-gray-400 mb-2">FULL NAME</label>
+                                <input type="text" id="name" required placeholder="John Smith" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
+                            </div>
+
+                            <div>
+                                <label for="email" class="block text-xs font-mono text-gray-400 mb-2">EMAIL ADDRESS</label>
+                                <input type="email" id="email" required placeholder="john@company.com" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="project-type" class="block text-xs font-mono text-gray-400 mb-2">INQUIRY TYPE</label>
+                            <select id="project-type" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite outline-none transition-all duration-300 font-sans">
+                                <option value="Network & Firewall Setup">Network & Firewall Administration</option>
+                                <option value="Cloud & Workspace Admin">M365 / Google Workspace Administration</option>
+                                <option value="Systems Admin & Support">Systems Admin or Endpoint Support</option>
+                                <option value="Cabling & Infrastructure">Ethernet/Coax Cabling & VoIP</option>
+                                <option value="General IT Consultation">General IT Project Consultation</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-xs font-mono text-gray-400 mb-2">PROJECT DETAILS & SCOPE</label>
+                            <textarea id="message" rows="4" required placeholder="Describe your workspace, timeline, or current technical challenges..." class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 resize-none font-sans"></textarea>
+                        </div>
+
+                        <button type="submit" id="submit-btn" class="w-full bg-iceBlue hover:bg-sky-400 text-midnight font-bold py-3.5 rounded-[14px] text-xs font-mono tracking-wider transition-all duration-400 ease-custom shadow-ambient active:scale-98">
+                            SUBMIT INQUIRY
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-midnight border-t border-slateBorder py-10 text-xs text-gray-400 font-mono">
+        <div class="max-w-7xl mx-auto px-6 lg:px-16 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <span class="text-sm font-bold text-offWhite font-sans">VoroscakIT</span>
+            </div>
+            <p class="text-gray-500 font-sans">voroscakit.com — "IT gets you there"</p>
+            <p class="text-[11px] text-gray-500">&copy; <span id="year"></span> VoroscakIT. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Drawer Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Remote Support Download Simulation
+        function downloadClient(os) {
+            const osName = os === 'mac' ? 'macOS (Universal)' : 'Windows (64-bit)';
+            showToast(`Initializing secure download for VoroscakIT Support client (${osName})...`, "success");
+            
+            setTimeout(() => {
+                showToast(`Download started successfully. Check your browser downloads.`, "success");
+            }, 1500);
+        }
+
+        // Contact Form Handling with Toast Feedback
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<span class="inline-block animate-spin mr-2">&#9881;</span> TRANSMITTING...`;
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = `SUBMIT INQUIRY`;
+                showToast("Inquiry successfully transmitted. VoroscakIT will review your message shortly.", "success");
+                document.getElementById('contact-form').reset();
+            }, 1200);
+        }
+
+        // Toast Feedback System
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            toast.className = `pointer-events-auto flex items-center space-x-3 px-5 py-3.5 rounded-[14px] bg-slateCard border border-slateBorder text-offWhite shadow-ambient text-xs font-mono transition-all duration-400 transform translate-y-4 opacity-0`;
+            toast.innerHTML = `
+                <svg class="w-4 h-4 text-iceBlue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <div>${message}</div>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
