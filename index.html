@@ -402,23 +402,26 @@
                 </div>
 
                 <div class="bg-slateCard border border-slateBorder rounded-[28px] p-8 lg:p-12 shadow-ambient">
-                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-5">
+                    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleContactSubmit(event)" class="space-y-5">
                         
+                        <!-- Web3Forms Access Key -->
+                        <input type="hidden" name="access_key" value="52a67016-8c17-4122-a432-369a593b012c">
+
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                 <label for="name" class="block text-xs font-mono text-gray-400 mb-2">FULL NAME</label>
-                                <input type="text" id="name" required placeholder="John Smith" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
+                                <input type="text" id="name" name="name" required placeholder="John Smith" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
                             </div>
 
                             <div>
                                 <label for="email" class="block text-xs font-mono text-gray-400 mb-2">EMAIL ADDRESS</label>
-                                <input type="email" id="email" required placeholder="john@company.com" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
+                                <input type="email" id="email" name="email" required placeholder="john@company.com" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
                             </div>
                         </div>
 
                         <div>
                             <label for="project-type" class="block text-xs font-mono text-gray-400 mb-2">INQUIRY TYPE</label>
-                            <select id="project-type" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite outline-none transition-all duration-300 font-sans">
+                            <select id="project-type" name="inquiry_type" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite outline-none transition-all duration-300 font-sans">
                                 <option value="Network & Firewall Setup">Network & Firewall Administration</option>
                                 <option value="Cloud & Workspace Admin">M365 / Google Workspace Administration</option>
                                 <option value="Systems Admin & Support">Systems Admin or Endpoint Support</option>
@@ -429,7 +432,7 @@
 
                         <div>
                             <label for="message" class="block text-xs font-mono text-gray-400 mb-2">PROJECT DETAILS & SCOPE</label>
-                            <textarea id="message" rows="4" required placeholder="Describe your workspace, timeline, or current technical challenges..." class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 resize-none font-sans"></textarea>
+                            <textarea id="message" name="message" rows="4" required placeholder="Describe your workspace, timeline, or current technical challenges..." class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 resize-none font-sans"></textarea>
                         </div>
 
                         <button type="submit" id="submit-btn" class="w-full bg-iceBlue hover:bg-sky-400 text-midnight font-bold py-3.5 rounded-[14px] text-xs font-mono tracking-wider transition-all duration-400 ease-custom shadow-ambient active:scale-98">
@@ -481,24 +484,40 @@
             showToast(`Initializing secure download for VoroscakIT Support client (${osName})...`, "success");
             
             setTimeout(() => {
-                // Direct navigation to reliably trigger GitHub release file download
                 window.location.href = targetUrl;
             }, 1000);
         }
 
-        // Contact Form Handling with Toast Feedback
-        function handleContactSubmit(e) {
+        // Contact Form Handling with Web3Forms AJAX & Toast Feedback
+        async function handleContactSubmit(e) {
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
             btn.disabled = true;
             btn.innerHTML = `<span class="inline-block animate-spin mr-2">&#9881;</span> TRANSMITTING...`;
 
-            setTimeout(() => {
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+                const data = await response.json();
+
                 btn.disabled = false;
                 btn.innerHTML = `SUBMIT INQUIRY`;
-                showToast("Inquiry successfully transmitted. VoroscakIT will review your message shortly.", "success");
-                document.getElementById('contact-form').reset();
-            }, 1200);
+
+                if (data.success) {
+                    showToast("Inquiry successfully transmitted to your M365 mailbox. VoroscakIT will review shortly.", "success");
+                    document.getElementById('contact-form').reset();
+                } else {
+                    showToast(data.message || "Transmission failed. Please check your access key.", "error");
+                }
+            } catch (error) {
+                btn.disabled = false;
+                btn.innerHTML = `SUBMIT INQUIRY`;
+                showToast("Network error. Please try again later.", "error");
+            }
         }
 
         // Toast Feedback System
