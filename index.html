@@ -475,14 +475,27 @@
             });
         });
 
-        // Remote Support Download Simulation
+        /* STREAMING_CHUNK:Updating downloadClient to trigger real file downloads */
         function downloadClient(os) {
-            const osName = os === 'mac' ? 'macOS (Universal)' : 'Windows (64-bit)';
-            showToast(`Initializing secure download for VoroscakIT Support client (${osName})...`, "success");
-            
-            setTimeout(() => {
-                showToast(`Download started successfully. Check your browser downloads.`, "success");
-            }, 1500);
+        const osName = os === 'mac' ? 'macOS (Universal)' : 'Windows (64-bit)';
+    
+        // Replace these URLs with your actual GitHub Release asset direct links
+        const macDownloadUrl = 'https://github.com/rvoroscak/voroscakitwebsite/releases/download/v1.0.0/voroscakit-aarch64.dmg;
+        const winDownloadUrl = 'https://github.com/rvoroscak/voroscakitwebsite/releases/download/v1.0.0/voroscakit.exe';
+    
+        const targetUrl = os === 'mac' ? macDownloadUrl : winDownloadUrl;
+
+        showToast(`Initializing secure download for VoroscakIT Support client (${osName})...`, "success");
+    
+        setTimeout(() => {
+                // Trigger the browser download
+                const anchor = document.createElement('a');
+                anchor.href = targetUrl;
+                anchor.download = '';
+                document.body.appendChild(anchor);
+                anchor.click();
+                document.body.removeChild(anchor);
+            }, 1000);
         }
 
         // Contact Form Handling with Toast Feedback
