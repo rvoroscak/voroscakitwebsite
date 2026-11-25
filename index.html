@@ -14,89 +14,18 @@
     <!-- Inline SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23060913'/%3E%3Cpath d='M8 9l8 14 8-14h-4.2L16 16.2 12.2 9H8z' fill='%2338BDF8'/%3E%3C/svg%3E">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Instrument Serif, Plus Jakarta Sans, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        midnight: '#060913',
-                        slateCard: '#0F1629',
-                        slateBorder: 'rgba(255, 255, 255, 0.08)',
-                        iceBlue: '#38BDF8',
-                        warmAmber: '#F59E0B',
-                        offWhite: '#F1F5F9'
-                    },
-                    fontFamily: {
-                        editorial: ['Instrument Serif', 'serif'],
-                        sans: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace']
-                    },
-                    transitionTimingFunction: {
-                        custom: 'cubic-bezier(0.25, 1, 0.5, 1)'
-                    },
-                    transitionDuration: {
-                        400: '400ms'
-                    },
-                    scale: {
-                        98: '.98'
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            background-color: #060913;
-            color: #F1F5F9;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
 
-        .font-editorial {
-            font-family: 'Instrument Serif', serif;
-        }
-
-        /* Ambient occlusion multi-layer shadow */
-        .shadow-ambient {
-            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.07);
-        }
-
-        .shadow-ambient-hover:hover {
-            box-shadow: 0 32px 64px -16px rgba(56, 189, 248, 0.15), 0 0 1px 1px rgba(56, 189, 248, 0.3);
-        }
-
-        /* Subtle grid background pattern */
-        .editorial-grid {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-            background-size: 32px 32px;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #060913;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1E293B;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #334155;
-        }
-    </style>
+    <!-- Local Compiled Styles & Strict-CSP JavaScript -->
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
 </head>
 <body class="bg-midnight text-offWhite min-h-screen flex flex-col selection:bg-iceBlue selection:text-midnight">
 
-    <div id="toast-container" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 flex flex-col gap-3 pointer-events-none max-w-sm"></div>
+    <div id="toast-container" aria-live="polite" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 flex flex-col gap-3 pointer-events-none max-w-sm"></div>
 
     <header class="sticky top-0 z-40 bg-midnight/80 backdrop-blur-xl border-b border-slateBorder transition-all duration-400">
         <div class="max-w-7xl mx-auto px-6 lg:px-16">
@@ -112,7 +41,7 @@
 
                 <!-- Desktop Nav Links -->
                 <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
-                    <a href="#capabilities" class="hover:text-iceBlue transition-colors duration-300">Skills & Services</a>
+                    <a href="#capabilities" class="hover:text-iceBlue transition-colors duration-300">Skills &amp; Services</a>
                     <a href="#engagement" class="hover:text-iceBlue transition-colors duration-300">How We Work</a>
                     <a href="#manifesto" class="hover:text-iceBlue transition-colors duration-300">Philosophy</a>
                     <a href="#about" class="hover:text-iceBlue transition-colors duration-300">About</a>
@@ -138,7 +67,7 @@
 
         <!-- Mobile Drawer -->
         <div id="mobile-menu" class="hidden md:hidden border-b border-slateBorder bg-midnight/95 backdrop-blur-2xl px-8 py-6 space-y-4">
-            <a href="#capabilities" class="mobile-link block text-base font-medium text-gray-200 hover:text-iceBlue">Skills & Services</a>
+            <a href="#capabilities" class="mobile-link block text-base font-medium text-gray-200 hover:text-iceBlue">Skills &amp; Services</a>
             <a href="#engagement" class="mobile-link block text-base font-medium text-gray-200 hover:text-iceBlue">How We Work</a>
             <a href="#manifesto" class="mobile-link block text-base font-medium text-gray-200 hover:text-iceBlue">Philosophy</a>
             <a href="#about" class="mobile-link block text-base font-medium text-gray-200 hover:text-iceBlue">About</a>
@@ -161,7 +90,7 @@
         <!-- Hero Section -->
         <section id="hero" class="relative pt-12 pb-16 lg:pt-20 lg:pb-24 border-b border-slateBorder overflow-hidden">
             <!-- Subtle Ambient Spotlight -->
-            <div aria-hidden="true" class="pointer-events-none absolute -top-24 -left-24 w-[480px] h-[480px] rounded-full bg-iceBlue/10 blur-[130px]"></div>
+            <div aria-hidden="true" class="pointer-events-none hero-glow"></div>
 
             <div class="relative max-w-7xl mx-auto px-6 lg:px-16">
                 <div class="max-w-3xl space-y-6 z-10">
@@ -446,47 +375,63 @@
                         Get Instant Remote Support
                     </h2>
                     <p class="text-gray-400 text-sm leading-relaxed font-sans">
-                        Select your operating system below to download the secure VoroscakIT remote support client for your workstation.
+                        Select your operating system below to download the VoroscakIT remote support client for your workstation.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
                     <!-- Mac Client Card -->
-                    <button type="button" onclick="downloadClient('mac')" class="bg-slateCard hover:bg-slate-800 border border-slateBorder hover:border-iceBlue rounded-[28px] p-8 flex flex-col items-center justify-center space-y-4 shadow-ambient transition-all duration-300 group cursor-pointer text-left w-full">
-                        <div class="w-16 h-16 rounded-[20px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.95 6.05c.57-.7 0.96-1.67.85-2.64-.83.03-1.84.55-2.43 1.24-.53.6-1 1.58-.87 2.55.93.07 1.88-.47 2.45-1.15z"/></svg>
+                    <div class="bg-slateCard border border-slateBorder hover:border-iceBlue rounded-[28px] p-8 flex flex-col justify-between space-y-5 shadow-ambient transition-all duration-300 group">
+                        <a href="https://github.com/rvoroscak/voroscakitwebsite/releases/download/v1.0.0/voroscakit-aarch64.dmg" download rel="noopener noreferrer" data-os="macOS (Apple Silicon)" class="download-client-link flex flex-col items-center justify-center space-y-4 text-center w-full">
+                            <div class="w-16 h-16 rounded-[20px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.95 6.05c.57-.7 0.96-1.67.85-2.64-.83.03-1.84.55-2.43 1.24-.53.6-1 1.58-.87 2.55.93.07 1.88-.47 2.45-1.15z"/></svg>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-bold text-offWhite font-sans">macOS Client</h3>
+                                <p class="text-xs font-mono text-gray-400">macOS 11+ (Apple Silicon)</p>
+                            </div>
+                            <span class="inline-flex items-center space-x-2 text-xs font-mono text-iceBlue pt-1 group-hover:translate-x-1 transition-transform">
+                                <span>DOWNLOAD .DMG</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            </span>
+                        </a>
+
+                        <!-- SHA-256 Verification Strip -->
+                        <div class="pt-4 border-t border-slateBorder flex items-center justify-between gap-2 text-[11px] font-mono text-gray-400 bg-midnight/70 px-3.5 py-2.5 rounded-[12px]">
+                            <span class="truncate" title="Replace with your DMG SHA-256 hash">SHA256: <span id="hash-mac" class="text-gray-300">UPDATE_MAC_SHA256_HASH</span></span>
+                            <button type="button" data-copy-target="hash-mac" data-label="macOS .DMG" class="copy-hash-btn text-iceBlue hover:text-sky-300 shrink-0 uppercase tracking-wider">COPY</button>
                         </div>
-                        <div class="text-center space-y-1">
-                            <h3 class="text-xl font-bold text-offWhite font-sans">macOS Client</h3>
-                            <p class="text-xs font-mono text-gray-400">macOS 11+ (Apple Silicon)</p>
-                        </div>
-                        <span class="inline-flex items-center space-x-2 text-xs font-mono text-iceBlue pt-2 group-hover:translate-x-1 transition-transform">
-                            <span>DOWNLOAD .DMG</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        </span>
-                    </button>
+                    </div>
 
                     <!-- Windows Client Card -->
-                    <button type="button" onclick="downloadClient('windows')" class="bg-slateCard hover:bg-slate-800 border border-slateBorder hover:border-iceBlue rounded-[28px] p-8 flex flex-col items-center justify-center space-y-4 shadow-ambient transition-all duration-300 group cursor-pointer text-left w-full">
-                        <div class="w-16 h-16 rounded-[20px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3.449L10.02 2v9.33H0V3.449zm11.838-.28L24 1.3v9.85H11.838V3.169zM0 13.67h10.02V23L0 21.551v-7.88zm11.838.161H24V22.7l-12.162 1.81V13.831z"/></svg>
+                    <div class="bg-slateCard border border-slateBorder hover:border-iceBlue rounded-[28px] p-8 flex flex-col justify-between space-y-5 shadow-ambient transition-all duration-300 group">
+                        <a href="https://github.com/rvoroscak/voroscakitwebsite/releases/download/v1.0.0/voroscakit.exe" download rel="noopener noreferrer" data-os="Windows (64-bit)" class="download-client-link flex flex-col items-center justify-center space-y-4 text-center w-full">
+                            <div class="w-16 h-16 rounded-[20px] bg-midnight border border-slateBorder flex items-center justify-center text-iceBlue group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3.449L10.02 2v9.33H0V3.449zm11.838-.28L24 1.3v9.85H11.838V3.169zM0 13.67h10.02V23L0 21.551v-7.88zm11.838.161H24V22.7l-12.162 1.81V13.831z"/></svg>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-bold text-offWhite font-sans">Windows Client</h3>
+                                <p class="text-xs font-mono text-gray-400">Windows 10 / 11 (64-bit)</p>
+                            </div>
+                            <span class="inline-flex items-center space-x-2 text-xs font-mono text-iceBlue pt-1 group-hover:translate-x-1 transition-transform">
+                                <span>DOWNLOAD .EXE</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            </span>
+                        </a>
+
+                        <!-- SHA-256 Verification Strip -->
+                        <div class="pt-4 border-t border-slateBorder flex items-center justify-between gap-2 text-[11px] font-mono text-gray-400 bg-midnight/70 px-3.5 py-2.5 rounded-[12px]">
+                            <span class="truncate" title="Replace with your signed EXE SHA-256 hash">SHA256: <span id="hash-win" class="text-gray-300">UPDATE_WIN_SHA256_HASH</span></span>
+                            <button type="button" data-copy-target="hash-win" data-label="Windows .EXE" class="copy-hash-btn text-iceBlue hover:text-sky-300 shrink-0 uppercase tracking-wider">COPY</button>
                         </div>
-                        <div class="text-center space-y-1">
-                            <h3 class="text-xl font-bold text-offWhite font-sans">Windows Client</h3>
-                            <p class="text-xs font-mono text-gray-400">Windows 10 / 11 (64-bit)</p>
-                        </div>
-                        <span class="inline-flex items-center space-x-2 text-xs font-mono text-iceBlue pt-2 group-hover:translate-x-1 transition-transform">
-                            <span>DOWNLOAD .EXE</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        </span>
-                    </button>
+                    </div>
                 </div>
 
                 <!-- 3-Step Remote Session Guide -->
                 <div class="bg-slateCard/80 border border-slateBorder rounded-[22px] p-6 text-left grid grid-cols-1 sm:grid-cols-3 gap-6 shadow-ambient">
                     <div class="space-y-1">
                         <span class="font-mono text-[11px] text-iceBlue block">STEP 01 // LAUNCH</span>
-                        <p class="text-xs text-gray-300 font-sans leading-relaxed">Open the downloaded file (on macOS, drag to Applications or allow in Privacy &amp; Security).</p>
+                        <p class="text-xs text-gray-300 font-sans leading-relaxed">Run the downloaded file. On macOS, Control-click (Right-click) &rarr; <strong>Open</strong> if prompted by Gatekeeper.</p>
                     </div>
                     <div class="space-y-1">
                         <span class="font-mono text-[11px] text-iceBlue block">STEP 02 // SHARE ID</span>
@@ -514,34 +459,34 @@
                 </div>
 
                 <div class="bg-slateCard border border-slateBorder rounded-[28px] p-8 lg:p-12 shadow-ambient">
-                    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleContactSubmit(event)" class="space-y-5">
+                    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-5">
                         
                         <!-- Web3Forms Access Key & Ticket Metadata -->
                         <input type="hidden" name="access_key" value="52a67016-8c17-4122-a432-369a593b012c">
                         <input type="hidden" name="subject" value="New VoroscakIT Website Inquiry">
-                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" class="hidden">
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                 <label for="name" class="block text-xs font-mono text-gray-400 mb-2">FULL NAME *</label>
-                                <input type="text" id="name" name="name" required placeholder="John Smith" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
+                                <input type="text" id="name" name="name" required maxlength="100" placeholder="John Smith" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
                             </div>
 
                             <div>
                                 <label for="email" class="block text-xs font-mono text-gray-400 mb-2">EMAIL ADDRESS *</label>
-                                <input type="email" id="email" name="email" required placeholder="john@company.com" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
+                                <input type="email" id="email" name="email" required maxlength="150" placeholder="john@company.com" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                 <label for="company" class="block text-xs font-mono text-gray-400 mb-2">COMPANY / ORGANIZATION</label>
-                                <input type="text" id="company" name="company" placeholder="Acme Corp (Optional)" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
+                                <input type="text" id="company" name="company" maxlength="120" placeholder="Acme Corp (Optional)" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
                             </div>
 
                             <div>
                                 <label for="phone" class="block text-xs font-mono text-gray-400 mb-2">PHONE NUMBER</label>
-                                <input type="tel" id="phone" name="phone" placeholder="(215) 555-0199 (Optional)" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
+                                <input type="tel" id="phone" name="phone" maxlength="30" placeholder="(215) 555-0199 (Optional)" class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 font-sans">
                             </div>
                         </div>
 
@@ -561,7 +506,7 @@
 
                         <div>
                             <label for="message" class="block text-xs font-mono text-gray-400 mb-2">PROJECT DETAILS &amp; SCOPE *</label>
-                            <textarea id="message" name="message" rows="4" required placeholder="Describe your workspace, location, timeline, or current technical challenges..." class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 resize-none font-sans"></textarea>
+                            <textarea id="message" name="message" rows="4" required maxlength="2500" placeholder="Describe your workspace, location, timeline, or current technical challenges..." class="w-full bg-midnight border border-slateBorder focus:border-iceBlue rounded-[14px] px-5 py-3.5 text-sm text-offWhite placeholder-gray-600 outline-none transition-all duration-300 resize-none font-sans"></textarea>
                         </div>
 
                         <button type="submit" id="submit-btn" class="w-full bg-iceBlue hover:bg-sky-400 text-midnight font-bold py-3.5 rounded-[14px] text-xs font-mono tracking-wider transition-all duration-400 ease-custom shadow-ambient active:scale-98">
@@ -588,102 +533,5 @@
         </div>
     </footer>
 
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Mobile Menu Drawer Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            const isHidden = mobileMenu.classList.toggle('hidden');
-            mobileMenuBtn.setAttribute('aria-expanded', String(!isHidden));
-        });
-
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
-            });
-        });
-
-        // Remote Support Download Handler
-        function downloadClient(os) {
-            const osName = os === 'mac' ? 'macOS (Apple Silicon)' : 'Windows (64-bit)';
-            
-            const macDownloadUrl = 'https://github.com/rvoroscak/voroscakitwebsite/releases/download/v1.0.0/voroscakit-aarch64.dmg';
-            const winDownloadUrl = 'https://github.com/rvoroscak/voroscakitwebsite/releases/download/v1.0.1/voroscakit.exe';
-            
-            const targetUrl = os === 'mac' ? macDownloadUrl : winDownloadUrl;
-
-            showToast(`Initializing secure download for VoroscakIT Support client (${osName})...`, "success");
-            
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 1000);
-        }
-
-        // Contact Form Handling with Web3Forms AJAX & Toast Feedback
-        async function handleContactSubmit(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            const originalLabel = btn.textContent;
-            btn.disabled = true;
-            btn.innerHTML = `<span class="inline-block animate-spin mr-2">&#9881;</span> CREATING TICKET...`;
-
-            const formData = new FormData(e.target);
-
-            try {
-                const response = await fetch("https://api.web3forms.com/submit", {
-                    method: "POST",
-                    body: formData
-                });
-                const data = await response.json();
-
-                btn.disabled = false;
-                btn.textContent = originalLabel;
-
-                if (data.success) {
-                    showToast("Support ticket created. VoroscakIT has received your inquiry and will follow up shortly.", "success");
-                    document.getElementById('contact-form').reset();
-                } else {
-                    showToast(data.message || "Submission failed. Please try again or call (267) 540-3247.", "error");
-                }
-            } catch (error) {
-                btn.disabled = false;
-                btn.textContent = originalLabel;
-                showToast("Network error. Please check your connection or call (267) 540-3247.", "error");
-            }
-        }
-
-        // Toast Feedback System
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            const isError = type === 'error';
-            
-            const borderClass = isError ? 'border-rose-500/40' : 'border-slateBorder';
-            const iconSvg = isError
-                ? `<svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86l-7.5 13A1 1 0 003.66 18h16.68a1 1 0 00.87-1.5l-7.5-13a1 1 0 00-1.74 0z"></path></svg>`
-                : `<svg class="w-4 h-4 text-iceBlue shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-
-            toast.className = `pointer-events-auto flex items-start space-x-3 px-5 py-3.5 rounded-[14px] bg-slateCard border ${borderClass} text-offWhite shadow-ambient text-xs font-mono transition-all duration-400 transform translate-y-4 opacity-0`;
-            toast.innerHTML = `
-                <div class="mt-0.5">${iconSvg}</div>
-                <div class="leading-relaxed">${message}</div>
-            `;
-
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-4', 'opacity-0');
-            }, 50);
-
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-4');
-                setTimeout(() => toast.remove(), 400);
-            }, 4500);
-        }
-    </script>
 </body>
 </html>
